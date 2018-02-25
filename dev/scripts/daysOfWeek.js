@@ -39,6 +39,8 @@ class DaysOfWeek extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.submitCalories = this.submitCalories.bind(this);
+        this.remove = this.remove.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
     handleClick (e) {
@@ -53,84 +55,156 @@ class DaysOfWeek extends React.Component {
         })
     }
 
+    remove(index) {
+        const userInputDay = this.state.day;
+        const targetDay = Object.assign({}, this.state[userInputDay]);
+        let daySum;
+
+        targetDay.calories.splice(index, 1);
+        daySum = targetDay.calories.reduce((acc, curr) => {
+            return Number(acc) + Number(curr);
+        })
+        this.state[userInputDay].sum = daySum;
+    }
+
     submitCalories(e) {
         e.preventDefault();
         const userInputDay = this.state.day;
-        const userInputDayCalories = this.state[userInputDay].calories
-        let dayArray;
+        const targetDay = Object.assign({}, this.state[userInputDay]);
+        let daySum;
 
         //make copy of the array that was chosen
         for(let property in this.state) {
             if(property === userInputDay) {
-                dayArray = Array.from(this.state[userInputDay].calories);
-                dayArray.push(this.state.calories);
+                targetDay.calories.push(this.state.calories);
+                daySum = targetDay.calories.reduce((acc, curr) => {
+                    return Number(acc) + Number(curr);
+                })
+                this.state[userInputDay].sum = daySum;
             }
         }
-        
-        const Sum = dayArray.reduce((acc,curr) => {
-            return acc + curr;
-        });
 
-        this.setState ({
-            [userInputDay].calories: dayArray
+        this.setState({
+            targetDay,
+            calories:""
         })
+    }
 
+    reset () {
+        this.setState({
+            Monday: {
+                calories: [],
+                sum: 0
+            },
+            Tuesday: {
+                calories: [],
+                sum: 0
+            },
+            Wednesday: {
+                calories: [],
+                sum: 0
+            },
+            Thursday: {
+                calories: [],
+                sum: 0
+            },
+            Friday: {
+                calories: [],
+                sum: 0
+            },
+            Saturday: {
+                calories: [],
+                sum: 0
+            },
+            Sunday: {
+                calories: [],
+                sum: 0
+            },
+            calories: "",
+            day: ""
+        })
     }
 
     render () { 
-        // console.log(this.state.Monday)
         return (
             <div>
-                <div>
+                <div className="days-of-week">
                     <div onClick={this.handleClick} id="Monday">
                         <h3 id="Monday">Monday</h3>
                         <ul>
-
+                            {this.state.day ==="Monday" ? 
+                            this.state[this.state.day].calories.map((value,i) => {
+                                return <DisplayCalories index={i} data={value} remove={this.remove}/>
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Monday.sum}</h4>
                     </div>
                     <div onClick={this.handleClick} id="Tuesday">
                         <h3 id="Tuesday">Tuesday</h3>
                         <ul>
-
+                            {this.state.day === "Tuesday" ?
+                            this.state[this.state.day].calories.map((value, i) => {
+                                    return <DisplayCalories index={i} data={value} remove={this.remove} />
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Tuesday.sum}</h4>
                     </div>
                     <div onClick={this.handleClick} id="Wednesday">
                         <h3 id="Wednesday">Wednesday</h3>
                         <ul>
-
+                            {this.state.day === "Wednesday" ?
+                                this.state[this.state.day].calories.map((value, i) => {
+                                    return <DisplayCalories index={i} data={value} remove={this.remove} />
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Wednesday.sum}</h4>
                     </div>
                     <div onClick={this.handleClick} id="Thursday">
                         <h3 id="Thursday">Thursday</h3>
                         <ul>
-
+                            {this.state.day === "Thursday" ?
+                                this.state[this.state.day].calories.map((value, i) => {
+                                    return <DisplayCalories index={i} data={value} remove={this.remove} />
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Thursday.sum}</h4>
                     </div>
                     <div onClick={this.handleClick} id="Friday">
                         <h3 id="Friday">Friday</h3>
                         <ul>
-
+                            {this.state.day === "Friday" ?
+                                this.state[this.state.day].calories.map((value, i) => {
+                                    return <DisplayCalories index={i} data={value} remove={this.remove} />
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Friday.sum}</h4>
                     </div>
                     <div onClick={this.handleClick} id="Saturday">
                         <h3 id="Saturday">Saturday</h3>
                         <ul>
-
+                            {this.state.day === "Saturday" ?
+                                this.state[this.state.day].calories.map((value, i) => {
+                                    return <DisplayCalories index={i} data={value} remove={this.remove} />
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Saturday.sum}</h4>
                     </div>
                     <div onClick={this.handleClick} id="Sunday">
                         <h3 id="Sunday">Sunday</h3>
                         <ul>
-
+                            {this.state.day === "Sunday" ?
+                                this.state[this.state.day].calories.map((value, i) => {
+                                    return <DisplayCalories index={i} data={value} remove={this.remove} />
+                            }) : null}
                         </ul>
+                        <h4>Total: {this.state.Sunday.sum}</h4>
                     </div>
                 </div>
                 <form onSubmit={this.submitCalories}>
                     <label htmlFor="calories">Calories</label>
                     <input type="text" id="calories" onChange={this.handleChange} value={this.state.calories}/>
-
-                    <input type="submit" value="submit"/>
                 </form>
+                <button onClick={this.reset}>Reset</button>
             </div>
         )
     }
