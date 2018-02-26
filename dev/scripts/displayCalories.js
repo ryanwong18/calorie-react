@@ -4,7 +4,7 @@ const DisplayCalories = (props) => {
     return (
        <li>
            {props.data}
-           <button onClick={() => props.remove(props.index)}>X</button>
+           <button onClick={(e) => props.remove(e,props.index)}>X</button>
        </li>
     )
 }

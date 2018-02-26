@@ -3,6 +3,17 @@ import ReactDOM from 'react-dom';
 import Header from "./header.js";
 import DaysOfWeek from "./daysOfWeek.js"
 
+const config = {
+  apiKey: "AIzaSyBul9-cw7kIEXR3mjRZ1sUSxb4mhEf1GiY",
+  authDomain: "calorie-counter-45cf1.firebaseapp.com",
+  databaseURL: "https://calorie-counter-45cf1.firebaseio.com",
+  projectId: "calorie-counter-45cf1",
+  storageBucket: "",
+  messagingSenderId: "442356233068"
+};
+
+firebase.initializeApp(config);
+
 class Metrics extends React.Component {
   constructor() {
     super();
@@ -13,20 +24,19 @@ class Metrics extends React.Component {
         height:"",
         exercise:1.2,
         gender:"male",
-        BMR:""
+        BMR:"",
+        loggedIn:false,
+        user:{}
       }
       this.handleChange = this.handleChange.bind(this);
       this.submitMetrics = this.submitMetrics.bind(this);
+      this.signOut = this.signOut.bind(this);
   } 
 
   handleChange (e) {
     this.setState({
       [e.target.id]: e.target.value
     });
-  }
-
-  calc () {
-    
   }
 
   submitMetrics (e) {
@@ -49,32 +59,96 @@ class Metrics extends React.Component {
     else {
       newBMR = Math.round((10 * this.state.weight + 6.25 * this.state.height - 5 * this.state.age - 161) * this.state.exercise);
     }
-  
-    //Object for Firebase
-    // const metrics = {
-    //   name:this.state.name,
-    //   height:this.state.height,
-    //   weight:this.state.weight,
-    //   gender:this.state.gender,
-    //   exercise:this.state.exercise,
-    //   age:this.state.age,
-    //   BMR:this.state.BMR
-    // }
+
+    const dbRef = firebase.database().ref(this.state.user.uid);
+
+    const personalInfo = {
+      name: this.state.name,
+      age: this.state.age,
+      weight: this.state.weight,
+      height: this.state.height,
+      exercise: this.state.exercise,
+      gender: this.state.gender,
+      BMR: newBMR
+    }
+
+    dbRef.push(personalInfo);
 
     this.setState({
       weight: "",
       height: "",
-      age:"",
-      name:"",
-      exercise:1.2,
-      BMR:newBMR
+      age: "",
+      name: "",
+      exercise: 1.2
+    });
+
+  }
+
+  signIn () {
+    console.log("signing in");
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    provider.setCustomParameters({
+      prompt: "select_account"
+    });
+
+    firebase.auth().signInWithPopup(provider)
+      .then((res) => {
+        console.log(res);
+      });
+  }
+
+  signOut () {
+    console.log("this is working");
+    firebase.auth().signOut();
+    this.setState({
+      loggedIn:false
     });
   }
-  
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((res) => {
+      console.log(res);
+      if (res) {
+        this.setState({
+          loggedIn: true,
+          user:res
+        })
+      } else {
+        this.setState({
+          loggedIn: false,
+          user:{}
+        })
+      }
+    });
+    
+    const dbRef = firebase.database().ref();
+
+    dbRef.on("value", (snapshot) => {
+      const data = snapshot.val();
+      const state=[];
+      let newBMR;
+
+      for(let key in data) {
+        const userKey= data[key];
+
+        for (let item in userKey) {
+          newBMR = userKey[item].BMR
+        }
+      }
+      this.setState({
+        BMR:newBMR
+      })
+    })
+
+  }
+
   render() {
     return(
       <div>
         <Header />
+        <button onClick={this.signIn}>Sign In</button>
+        <button onClick={this.signOut}>Sign Out</button>
         <form onSubmit={this.submitMetrics} className="personal-info">
           <div className="personal-info-left-grid">
             <div>
@@ -114,12 +188,17 @@ class Metrics extends React.Component {
               <input type="submit" value="Submit"/>
             </div>
           </div>
+          {
+          this.state.loggedIn === true ?
           <div className="personal-info-right-grid">
-            <h2>Your BMR is <span>{this.state.BMR}</span></h2>
+            <h2>Hey, {this.state.user.displayName}, your BMR is <span>{this.state.BMR}</span></h2>
             <h2>BMR (Basal Metabolic Rate) is equivalent to the number of calories expended if you coded all day and wanted to maintain your body weight</h2>
           </div>
+          :
+          null
+          }
         </form>
-        <DaysOfWeek />
+        <DaysOfWeek userid={this.state.user.uid} />
       </div>
     )
   }

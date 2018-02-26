@@ -41,6 +41,7 @@ class DaysOfWeek extends React.Component {
         this.submitCalories = this.submitCalories.bind(this);
         this.remove = this.remove.bind(this);
         this.reset = this.reset.bind(this);
+        this.update = this.update.bind(this);
     }
 
     handleClick (e) {
@@ -55,18 +56,27 @@ class DaysOfWeek extends React.Component {
         })
     }
 
-    remove(index) {
+    remove(e,index) {
+        e.stopPropagation();
         const userInputDay = this.state.day;
         const targetDay = Object.assign({}, this.state[userInputDay]);
         let daySum;
 
         targetDay.calories.splice(index, 1);
-        console.log(index);
-        console.log(targetDay.calories);
-        daySum = targetDay.calories.reduce((acc, curr) => {
-            return Number(acc) + Number(curr);
+        if(targetDay.calories.length !== 0) {
+
+            daySum = targetDay.calories.reduce((acc, curr) => {
+                return Number(acc) + Number(curr);
+            })
+        }
+        else {
+            daySum = 0;
+        }
+
+        targetDay.sum = daySum;
+        this.setState({
+            [userInputDay]: targetDay
         })
-        this.state[userInputDay].sum = daySum;
     }
 
     submitCalories(e) {
@@ -75,7 +85,6 @@ class DaysOfWeek extends React.Component {
         const targetDay = Object.assign({}, this.state[userInputDay]);
         let daySum;
 
-        //make copy of the array that was chosen
         for(let property in this.state) {
             if(property === userInputDay) {
                 targetDay.calories.push(this.state.calories);
@@ -89,6 +98,32 @@ class DaysOfWeek extends React.Component {
         this.setState({
             targetDay,
             calories:""
+        })
+    }
+
+    update () {
+        const dbRef = firebase.database().ref(this.props.userid);
+        dbRef.push(this.state);
+        this.setState({
+            
+        })
+    }
+
+    componentDidMount () {
+        const dbRef = firebase.database().ref(this.props.userid);
+
+        dbRef.on("value", (snapshot) => {
+            const data = snapshot.val();
+            console.log(data);
+
+            const state = [];
+            for(let property in data) {
+                const itemKey = data[property];
+                for(let item in itemKey) {
+                    console.log(itemKey[item]);
+                    state.push(itemKey[item]);
+                }
+            }
         })
     }
 
@@ -199,6 +234,9 @@ class DaysOfWeek extends React.Component {
                         <label htmlFor="calories">Calories</label>
                         <input type="text" id="calories" onChange={this.handleChange} value={this.state.calories}/>
                     </form>
+                    <div className="update">
+                        <button onClick={this.update}>Update</button>
+                    </div>
                     <div className="reset">
                         <button onClick={this.reset}>Reset</button>
                     </div>
