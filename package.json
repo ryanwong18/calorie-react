@@ -1,12 +1,10 @@
 {
-  "name": "calorie-counter",
+  "name": "react-boilerplate",
   "version": "1.0.0",
   "description": "1. `git clone` this repo 2. `npm install` 3. enjoy!",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -40,5 +38,5 @@
   "bugs": {
     "url": "https://github.com/ryanwong18/calorie-react/issues"
   },
-  "homepage": "https://ryanwong18.github.io/calorie-react/"
+  "homepage": "https://github.com/ryanwong18/calorie-react#readme"
 }
