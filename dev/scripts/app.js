@@ -146,58 +146,62 @@ class Metrics extends React.Component {
   render() {
     return(
       <div>
-        <Header />
-        <button onClick={this.signIn}>Sign In</button>
-        <button onClick={this.signOut}>Sign Out</button>
-        <form onSubmit={this.submitMetrics} className="personal-info">
-          <div className="personal-info-left-grid">
-            <div>
-              <label htmlFor="name">Name</label>
-              <input type="text" id="name" value={this.state.name} onChange={this.handleChange}/>
-            </div>
-            <div>
-              <label htmlFor="age">Age</label>
-              <input type="text" id="age" value={this.state.age} onChange={this.handleChange}/>
-            </div>
-            <div>
-              <label htmlFor="weight">Weight</label>
-              <input type="text" id="weight" value={this.state.weight} onChange={this.handleChange}/>
-            </div>
-            <div>
-              <label htmlFor="height">Height</label>
-              <input type="text" id="height" value={this.state.height} onChange={this.handleChange}/>
-            </div>
-            <div>
-              <label htmlFor="gender">Gender</label>
-              <select name="gender" id="gender" value={this.state.gender} onChange={this.handleChange}>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="exercise">Exercise</label>
-              <select name="exercise" id="exercise" value={this.state.exercise} onChange={this.handleChange}>
-                <option value="1.2">Little to none</option>
-                <option value="1.375">Light level of exercise (1-3 days/week)</option>
-                <option value="1.55">Moderate level of exercise (3-5 days/week)</option>
-                <option value="1.725">Heavy level of exercise (5-7 days/week)</option>
-                <option value="1.9">Extreme level of exercise (twice/day)</option>
-              </select>
-            </div>
-            <div>
-              <input type="submit" value="Submit"/>
-            </div>
+        <div className="hold-form">
+          <Header />
+          <div className="button-sign">
+            <button onClick={this.signIn}>Sign In</button>
+            <button onClick={this.signOut}>Sign Out</button>
           </div>
+          <form onSubmit={this.submitMetrics} className="personal-info">
+            <div className="personal-info-top">
+              <div>
+                <label htmlFor="name">Name</label>
+                <input type="text" id="name" value={this.state.name} onChange={this.handleChange}/>
+              </div>
+              <div>
+                <label htmlFor="age">Age</label>
+                <input type="text" id="age" value={this.state.age} onChange={this.handleChange}/>
+              </div>
+              <div>
+                <label htmlFor="weight">Weight</label>
+                <input type="text" id="weight" value={this.state.weight} onChange={this.handleChange}/>
+              </div>
+              <div>
+                <label htmlFor="height">Height</label>
+                <input type="text" id="height" value={this.state.height} onChange={this.handleChange}/>
+              </div>
+              <div>
+                <label htmlFor="gender">Gender</label>
+                <select name="gender" id="gender" value={this.state.gender} onChange={this.handleChange}>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="exercise">Exercise</label>
+                <select name="exercise" id="exercise" value={this.state.exercise} onChange={this.handleChange}>
+                  <option value="1.2">Little to none</option>
+                  <option value="1.375">Light level of exercise (1-3 days/week)</option>
+                  <option value="1.55">Moderate level of exercise (3-5 days/week)</option>
+                  <option value="1.725">Heavy level of exercise (5-7 days/week)</option>
+                  <option value="1.9">Extreme level of exercise (twice/day)</option>
+                </select>
+              </div>
+              <div>
+                <input type="submit" value="Submit"/>
+              </div>
+            </div>
+          </form>
+        </div>
           {
           this.state.loggedIn === true ?
-          <div className="personal-info-right-grid">
+          <div className="personal-info-bottom">
             <h2>Hey, {this.state.user.displayName}, your BMR is <span>{this.state.BMR}</span></h2>
             <h2>BMR (Basal Metabolic Rate) is equivalent to the number of calories expended if you coded all day and wanted to maintain your body weight</h2>
           </div>
           :
           null
           }
-        </form>
         <DaysOfWeek userid={this.state.user.uid} />
       </div>
     )

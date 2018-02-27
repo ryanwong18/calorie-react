@@ -136,7 +136,7 @@ html {
   font-size: 10px; }
 
 body {
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url(../../dev/styles/images/hero-image.jpg);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../../dev/styles/images/hero-image.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed; }
@@ -145,54 +145,100 @@ body {
   margin: 0 auto;
   max-width: 1000px; }
 
+.hold-form {
+  margin-top: 10px;
+  border: 2px solid black;
+  margin-bottom: 50px; }
+
 header {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 50px; }
   header h1 {
     text-transform: uppercase;
-    font-size: 3rem; }
+    font-size: 4rem;
+    margin-bottom: 10px; }
   header h2 {
-    font-size: 2rem; }
+    font-size: 2.5rem; }
 
-.personal-info {
-  display: flex; }
-  .personal-info .personal-info-left-grid, .personal-info .personal-info-right-grid {
-    width: 50%; }
-  .personal-info .personal-info-left-grid div {
-    margin: 0 0 30px 0; }
-  .personal-info .personal-info-right-grid h2 {
-    margin-top: 0;
-    margin-bottom: 50px; }
-  .personal-info label {
-    margin-right: 50px;
-    font-size: 1.5rem;
-    font-weight: 500; }
-  .personal-info input, .personal-info select {
-    padding: 3px 20px 3px 5px;
-    font-size: 1.2rem; }
-  .personal-info #name {
-    margin-left: 6px; }
-  .personal-info #age {
+.button-sign {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px; }
+  .button-sign button:first-of-type {
+    margin-right: 20px; }
+  .button-sign button:nth-of-type(2) {
     margin-left: 20px; }
-  .personal-info #height {
-    margin-left: 2px; }
-  .personal-info #exercise {
-    margin-left: -8px; }
-  .personal-info input[type="submit"] {
+  .button-sign button {
     padding: 5px 15px;
     text-transform: uppercase;
-    font-weight: 500; }
-  .personal-info span {
-    color: red;
-    font-size: 1.8rem;
-    padding-left: 5px; }
-  .personal-info h2:nth-of-type(2) {
+    font-weight: 500;
+    font-size: 1.2rem; }
+
+.personal-info .personal-info-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+
+.personal-info .personal-info-top div {
+  margin: 0 0 30px 0;
+  width: 38%; }
+
+.personal-info label {
+  margin-right: 50px;
+  font-size: 1.5rem;
+  font-weight: 700; }
+
+.personal-info input, .personal-info select {
+  padding: 3px 20px 3px 5px;
+  font-size: 1.2rem; }
+
+.personal-info input[type=submit] {
+  margin-left: 140px;
+  margin-top: 40px; }
+
+.personal-info #name {
+  margin-left: 6px; }
+
+.personal-info #age {
+  margin-left: 20px; }
+
+.personal-info #height {
+  margin-left: 2px; }
+
+.personal-info #exercise {
+  margin-left: -8px; }
+
+.personal-info input[type="submit"] {
+  padding: 5px 15px;
+  text-transform: uppercase;
+  font-weight: 500; }
+
+.personal-info h2:nth-of-type(2) {
+  font-weight: 400;
+  line-height: 2.5rem; }
+
+.personal-info-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .personal-info-bottom h2:first-of-type {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 2rem; }
+  .personal-info-bottom h2:nth-of-type(2) {
+    margin-bottom: 50px;
     font-weight: 400;
-    line-height: 2.5rem; }
+    font-size: 1.5rem; }
+  .personal-info-bottom span {
+    color: red;
+    font-size: 3rem;
+    padding-left: 5px; }
 
 .days-of-week {
   display: flex; }
@@ -204,8 +250,11 @@ header {
     align-items: center;
     border: 1px solid black;
     min-height: 300px; }
-  .days-of-week #Monday:active {
+  .days-of-week #Monday:active, .days-of-week #Tuesday:active, .days-of-week #Wednesday:active, .days-of-week #Thursday:active, .days-of-week #Friday:active, .days-of-week #Saturday:active, .days-of-week #Sunday:active {
     border: 1px solid red; }
+    .days-of-week #Monday:active h3, .days-of-week #Tuesday:active h3, .days-of-week #Wednesday:active h3, .days-of-week #Thursday:active h3, .days-of-week #Friday:active h3, .days-of-week #Saturday:active h3, .days-of-week #Sunday:active h3 {
+      color: red;
+      border-bottom: 1px solid red; }
   .days-of-week h3 {
     display: flex;
     justify-content: center;
@@ -229,21 +278,22 @@ header {
     .days-of-week li button {
       margin-left: 10px; }
 
-.calorie-input form {
-  margin-top: 50px; }
-
-.calorie-input label {
-  margin-right: 50px;
-  font-size: 1.5rem;
-  font-weight: 500; }
-
-.calorie-input input {
-  padding: 3px 20px 3px 5px;
-  font-size: 1.2rem; }
-
-.calorie-input button {
-  padding: 5px 15px;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 1.2rem;
-  margin: 50px 0; }
+.calorie-input {
+  display: flex;
+  justify-content: center; }
+  .calorie-input form {
+    margin-top: 50px; }
+  .calorie-input label {
+    margin-right: 30px;
+    font-size: 1.5rem;
+    font-weight: 700; }
+  .calorie-input input {
+    padding: 3px 20px 3px 5px;
+    font-size: 1.2rem;
+    margin-right: 20px; }
+  .calorie-input button {
+    padding: 5px 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin: 47px 0 50px 20px; }

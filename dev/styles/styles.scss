@@ -6,7 +6,7 @@ html {
 }
 
 body {
-    background-image:linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(../../dev/styles/images/hero-image.jpg);
+    background-image:linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(../../dev/styles/images/hero-image.jpg);
     background-repeat: no-repeat;
     background-size:cover;
     background-attachment: fixed;
@@ -17,47 +17,76 @@ body {
     max-width:1000px;
 }
 
+.hold-form {
+    margin-top:10px;
+    border: 2px solid black;
+    margin-bottom:50px;
+}
+
 header {
     display:flex;
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    margin-top:50px;
+    margin-top:30px;
     margin-bottom:50px;
     h1 {
         text-transform:uppercase;
-        font-size:3rem;
+        font-size:4rem;
+        margin-bottom:10px;
     }
     h2 {
-        font-size:2rem;
+        font-size:2.5rem;
+    }
+}
+
+.button-sign {
+    display:flex;
+    justify-content: center;
+    margin-bottom:50px;
+    button:first-of-type {
+        margin-right:20px;
+    }
+    button:nth-of-type(2) {
+        margin-left:20px;
+    }
+    button {
+    padding:5px 15px;
+    text-transform: uppercase;
+    font-weight:500;
+    font-size:1.2rem;
     }
 }
 
 .personal-info {
-    display:flex;
 
-    .personal-info-left-grid, .personal-info-right-grid {
-       width:50%;
+    .personal-info-top {
+        display:flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
     }
 
-    .personal-info-left-grid div {
+    .personal-info-top div {
         margin:0 0 30px 0;
-    }
+        width:38%;
 
-    .personal-info-right-grid h2 {
-        margin-top:0;
-        margin-bottom:50px;
     }
 
     label {
         margin-right:50px;
         font-size:1.5rem;
-        font-weight:500;
+        font-weight:700;
     }
 
     input, select {
         padding:3px 20px 3px 5px;
         font-size:1.2rem;
+    }
+
+    input[type=submit] {
+        margin-left:140px;
+        margin-top:40px;
     }
 
     #name {
@@ -82,15 +111,32 @@ header {
         font-weight:500;
     }
 
-    span {
-        color:red;
-        font-size:1.8rem;
-        padding-left:5px;
-    }
-
     h2:nth-of-type(2) {
         font-weight:400;
         line-height:2.5rem;
+    }
+}
+
+.personal-info-bottom {
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+
+    h2:first-of-type {
+        margin-top:0;
+        margin-bottom:20px;
+        font-size:2rem;
+    }
+    h2:nth-of-type(2) {
+        margin-bottom:50px;
+        font-weight:400;
+        font-size:1.5rem;
+    }
+    span {
+        color:red;
+        font-size:3rem;
+        padding-left:5px;
     }
 }
 
@@ -105,8 +151,12 @@ header {
         border:1px solid black;
         min-height:300px;
     }
-    #Monday:active {
+    #Monday:active, #Tuesday:active, #Wednesday:active, #Thursday:active, #Friday:active, #Saturday:active, #Sunday:active {
         border:1px solid red;
+        h3 {
+            color:red;
+            border-bottom:1px solid red;
+        }
     }
     h3 {
         display:flex;
@@ -138,23 +188,26 @@ header {
 }
 
 .calorie-input {
+    display:flex;
+    justify-content: center;
     form {
         margin-top:50px;
     }
     label {
-        margin-right:50px;
+        margin-right:30px;
         font-size:1.5rem;
-        font-weight:500;
+        font-weight:700;
     }
     input {
         padding:3px 20px 3px 5px;
         font-size:1.2rem;
+        margin-right:20px;
     }
     button {
     padding:5px 15px;
     text-transform: uppercase;
     font-weight:500;
     font-size:1.2rem;
-    margin:50px 0;
+    margin:47px 0 50px 20px;
     }
 }

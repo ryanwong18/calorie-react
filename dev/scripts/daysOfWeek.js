@@ -41,7 +41,6 @@ class DaysOfWeek extends React.Component {
         this.submitCalories = this.submitCalories.bind(this);
         this.remove = this.remove.bind(this);
         this.reset = this.reset.bind(this);
-        this.update = this.update.bind(this);
     }
 
     handleClick (e) {
@@ -98,32 +97,6 @@ class DaysOfWeek extends React.Component {
         this.setState({
             targetDay,
             calories:""
-        })
-    }
-
-    update () {
-        const dbRef = firebase.database().ref(this.props.userid);
-        dbRef.push(this.state);
-        this.setState({
-            
-        })
-    }
-
-    componentDidMount () {
-        const dbRef = firebase.database().ref(this.props.userid);
-
-        dbRef.on("value", (snapshot) => {
-            const data = snapshot.val();
-            console.log(data);
-
-            const state = [];
-            for(let property in data) {
-                const itemKey = data[property];
-                for(let item in itemKey) {
-                    console.log(itemKey[item]);
-                    state.push(itemKey[item]);
-                }
-            }
         })
     }
 
@@ -234,9 +207,6 @@ class DaysOfWeek extends React.Component {
                         <label htmlFor="calories">Calories</label>
                         <input type="text" id="calories" onChange={this.handleChange} value={this.state.calories}/>
                     </form>
-                    <div className="update">
-                        <button onClick={this.update}>Update</button>
-                    </div>
                     <div className="reset">
                         <button onClick={this.reset}>Reset</button>
                     </div>
